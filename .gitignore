@@ -8,8 +8,8 @@ __pycache__/
 .env
 
 # Runtime data & generated outputs
+# (reports/ are committed daily by the automation — see sync.sh)
 data/marketcap_cache.json
-reports/
 
 # WorkBuddy agent metadata
 .workbuddy/
