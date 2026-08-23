@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Secrets / local config
+.env
+
+# Runtime data & generated outputs
+data/marketcap_cache.json
+reports/
+
+# WorkBuddy agent metadata
+.workbuddy/
+
+# OS noise
+.DS_Store
+Thumbs.db

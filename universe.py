@@ -1,0 +1,83 @@
+# -*- coding: utf-8 -*-
+"""Default tradable universes (market cap >> floor, liquid). Edit freely.
+
+Feature (a): the universes are pluggable. At scan time main.py calls
+load_us_universe() / load_hk_universe(). These prefer an external override file
+(data/universe_us.json / data/universe_hk.json, a JSON list of [symbol, name])
+when present, otherwise fall back to the built-in lists below. Use
+tools/import_screener_universe.py to extract your real HK_UNIVERSE (e.g. from the
+old Eastmoney-based screener) into data/universe_hk.json.
+"""
+import os, json
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+
+
+def _load_json_universe(path):
+    if path and os.path.exists(path):
+        try:
+            data = json.load(open(path, encoding="utf-8"))
+            if isinstance(data, list) and data:
+                return [(str(a), str(b)) for a, b in data]
+        except Exception:
+            pass
+    return None
+
+
+def load_hk_universe(json_path=None):
+    json_path = json_path or os.path.join(DATA_DIR, "universe_hk.json")
+    return _load_json_universe(json_path) or HK_UNIVERSE
+
+
+def load_us_universe(json_path=None):
+    json_path = json_path or os.path.join(DATA_DIR, "universe_us.json")
+    return _load_json_universe(json_path) or US_UNIVERSE
+
+
+US_UNIVERSE = [
+    ("AAPL","Apple"),("MSFT","Microsoft"),("NVDA","NVIDIA"),("AMZN","Amazon"),
+    ("GOOGL","Alphabet"),("META","Meta"),("TSLA","Tesla"),("BRK-B","Berkshire"),
+    ("JPM","JPMorgan"),("V","Visa"),("UNH","UnitedHealth"),("XOM","Exxon"),
+    ("JNJ","Johnson & Johnson"),("WMT","Walmart"),("MA","Mastercard"),("PG","P&G"),
+    ("HD","Home Depot"),("CVX","Chevron"),("MRK","Merck"),("ABBV","AbbVie"),
+    ("PEP","PepsiCo"),("KO","Coca-Cola"),("BAC","Bank of America"),("COST","Costco"),
+    ("AVGO","Broadcom"),("ORCL","Oracle"),("ADBE","Adobe"),("CRM","Salesforce"),
+    ("NFLX","Netflix"),("AMD","AMD"),("INTC","Intel"),("CSCO","Cisco"),
+    ("DIS","Disney"),("MCD","McDonald's"),("NKE","Nike"),("QCOM","Qualcomm"),
+    ("TXN","Texas Instruments"),("LIN","Linde"),("WFC","Wells Fargo"),("IBM","IBM"),
+    ("GE","GE"),("CAT","Caterpillar"),("GS","Goldman Sachs"),("MS","Morgan Stanley"),
+]
+
+HK_UNIVERSE = [
+    ("0001.HK","CK Hutchison"),("0002.HK","CLP Holdings"),("0003.HK","HK & China Gas"),
+    ("0005.HK","HSBC"),("0006.HK","Power Assets"),("0011.HK","Hang Seng Bank"),
+    ("0012.HK","Henderson Land"),("0016.HK","SHK Properties"),("0017.HK","New World Dev"),
+    ("0019.HK","Swire Pacific A"),("0023.HK","Bank of E Asia"),("0027.HK","Galaxy Ent"),
+    ("0066.HK","MTR"),("0083.HK","Sino Land"),("0101.HK","Hang Lung Ppt"),
+    ("0144.HK","CG Services"),("0175.HK","Geely Auto"),("0267.HK","CITIC"),
+    ("0291.HK","CR Beer"),("0293.HK","Cathay Pacific"),("0386.HK","Sinopec"),
+    ("0388.HK","HKEX"),("0390.HK","China Railway"),("0398.HK","ICBC"),
+    ("0489.HK","Dongfeng Motor"),("0494.HK","Li Ning"),("0608.HK","Fosun Intl"),
+    ("0669.HK","Techtronic"),("0700.HK","Tencent"),("0762.HK","China Unicom"),
+    ("0808.HK","CNOOC"),("0836.HK","CR Power"),("0857.HK","PetroChina"),
+    ("0868.HK","Xinyi Glass"),("0881.HK","Zhongsheng"),("0939.HK","CCB"),
+    ("0941.HK","China Mobile"),("0960.HK","Longfor"),("0968.HK","Xinyi Solar"),
+    ("0981.HK","SMIC"),("0992.HK","Lenovo"),("0998.HK","CITIC Bank"),
+    ("1024.HK","Kuaishou"),("1044.HK","Hengan"),("1088.HK","China Shenhua"),
+    ("1093.HK","CSPC Pharma"),("1109.HK","CR Land"),("1114.HK","Brilliance"),
+    ("1177.HK","Sino Biopharm"),("1209.HK","CR Pharma"),("1211.HK","BYD"),
+    ("1299.HK","AIA"),("1347.HK","Hua Hong"),("1398.HK","ICBC"),
+    ("1810.HK","Xiaomi"),("1876.HK","Budweiser APAC"),("1898.HK","China Coal"),
+    ("1928.HK","Sands China"),("1929.HK","CTG Duty Free"),("2007.HK","CG Services"),
+    ("2018.HK","Feihe"),("2020.HK","Anta"),("2269.HK","WuXi Biologics"),
+    ("2313.HK","Shenzhou Intl"),("2318.HK","Ping An"),("2319.HK","Mengniu"),
+    ("2328.HK","PICC"),("2331.HK","Li Auto"),("2333.HK","Great Wall Motor"),
+    ("2359.HK","WuXi AppTec"),("2382.HK","Sunny Optical"),("2388.HK","BOC Hong Kong"),
+    ("2601.HK","CPIC"),("2628.HK","China Life"),("2669.HK","CIFI"),
+    ("2688.HK","ENN Energy"),("2899.HK","Zijin Mining"),("2938.HK","CMOC"),
+    ("3690.HK","Meituan"),("3968.HK","CM Bank"),("3988.HK","Bank of China"),
+    ("9618.HK","JD.com"),("9626.HK","Bilibili"),("9633.HK","Nongfu Spring"),
+    ("9888.HK","Baidu"),("9901.HK","New Oriental"),("9961.HK","Trip.com"),
+    ("9983.HK","BYD Electronics"),("9999.HK","NetEase"),
+]

@@ -1,0 +1,4 @@
+# No third-party dependencies required.
+# The app uses only the Python standard library (urllib, smtplib, argparse, json).
+# Optional: uncomment if you want to add a market-cap filter via stockanalysis later.
+# requests

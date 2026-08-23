@@ -1,0 +1,12 @@
+# ---------------------------------------------------------------------------
+# Crontab entry (Linux / macOS / WSL). Runs the daily scan + email at 08:30.
+# Hong Kong time is UTC+8, so 08:30 HKT = 00:30 UTC. Adjust to your timezone.
+#
+# 1) Edit the paths below to match this machine.
+# 2) Ensure the env vars for email are exported in the cron environment
+#    (CAH_SMTP_HOST, CAH_SMTP_USER, CAH_SMTP_PASS, CAH_EMAIL_FROM, CAH_EMAIL_TO),
+#    e.g. put them in a small wrapper script sourced by cron.
+# 3) Install with:  crontab -e   (paste the line below)
+# ---------------------------------------------------------------------------
+
+30 0 * * * cd /ABS/PATH/TO/stock_cah_app && /usr/bin/python3 main.py run --market both --email >> cron.log 2>&1
